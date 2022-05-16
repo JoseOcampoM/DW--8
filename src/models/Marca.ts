@@ -1,6 +1,5 @@
-import sequelize from "sequelize";
-import { Model, DataTypes } from "sequelize";
-import { database } from "../database/db";
+import { Model, DataType, DataTypes } from 'sequelize';
+import { database } from '../database/db';
 
 export class Marca extends Model {
     public nombre!: string;
@@ -8,8 +7,8 @@ export class Marca extends Model {
 
 export interface MarcaI {
     nombre: string;
+    
 }
-
 
 Marca.init(
     {
@@ -17,11 +16,12 @@ Marca.init(
             type: DataTypes.STRING,
             allowNull: false
         },
+
+        
     },
     {
-        tableName: "marcas",
+        tableName: 'marcas',
         sequelize: database,
-        timestamps: false
+        timestamps: true
     }
-    
 )

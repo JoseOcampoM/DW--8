@@ -1,6 +1,6 @@
-import express, { Application } from "express";
-import morgan from "morgan";
-import { Routes } from "../routes/index";
+import express, { Application } from 'express';
+import morgan from 'morgan';
+import { Routes } from '../routes/index';
 
 export class App {
     app: Application;
@@ -12,29 +12,30 @@ export class App {
         this.app = express();
         this.settings();
         this.middlewares();
-        this.routes();
+        this.Routes()
+    }
+    
+    settings() {
+       this.app.set('port', this.port || 3000);
     }
 
-    settings() {
-        this.app.set('port', this.port || 3000);
-    }
-    async listen() {
+    async listen(){
         await this.app.listen(this.app.get('port'));
         console.log('Server on port', this.app.get('port'));
     }
 
     middlewares() {
         this.app.use(morgan('dev'));
-        this.app.use(express.json);
-        this.app.use(express.urlencoded({ extended: false}));
+        this.app.use(express.json());
+        this.app.use(express.urlencoded({extended: false}));
     }
 
-    routes() {
+    Routes() {
         this.routePrv.usuarioRoutes.routes(this.app)
         this.routePrv.ventaRoutes.routes(this.app)
         this.routePrv.marcaRoutes.routes(this.app)
-        this.routePrv.tipovehiculoRoutes.routes(this.app)
+        this.routePrv.tipoVehiculoRoutes.routes(this.app)
         this.routePrv.vehiculoRoutes.routes(this.app)
     }
-   
+
 }

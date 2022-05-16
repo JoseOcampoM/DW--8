@@ -1,6 +1,5 @@
-import sequelize from "sequelize";
-import { Model, DataTypes } from "sequelize";
-import { database } from "../database/db";
+import { Model, DataType, DataTypes } from 'sequelize';
+import { database } from '../database/db';
 
 export class VehiculoVenta extends Model {
     public VehiculoId!: number;
@@ -10,8 +9,6 @@ export class VehiculoVenta extends Model {
 export interface VehiculoVentaI {
     VehiculoId: number;
     VentaId: number;
-
-
 }
 
 VehiculoVenta.init(
@@ -24,11 +21,12 @@ VehiculoVenta.init(
             type: DataTypes.BIGINT,
             allowNull: false
         },
+
+        
     },
     {
-        tableName: "vehiculoVentas",
+        tableName: 'vehiculo_venta',
         sequelize: database,
-        timestamps: false
+        timestamps: true
     }
-    
 )

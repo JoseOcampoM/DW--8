@@ -1,28 +1,26 @@
-import { Request, Response } from "express";
-import { Usuario, UsuarioI } from "../models/Usuario";
+import { Request, Response } from 'express';
+import { Usuario, UsuarioI } from '../models/Usuario';
 
 export class UsuarioController {
-
     public async getAllUsuario(req: Request, res: Response){
-        try {
+        try{
             const user: UsuarioI[] = await Usuario.findAll(
                 {
-                    where: {activo: true}
+                    where: {activo : true}
                 }
-            )
+            )  //select * from usuarios;
             res.status(200).json({user})
-        } catch (error) {
+        } catch(error){
 
         }
     }
 
     public async getOneUsuario(req: Request, res: Response){
-        const {id: idParam} = req.params
-
-        try {
-            const user:UsuarioI | null = await Usuario.findOne(
+        const { id: idParam } = req.params 
+        try{
+            const user: UsuarioI | null = await Usuario.findOne(
                 {
-                    where: { 
+                    where: {
                         id: idParam,
                         activo: true
                     }
@@ -30,35 +28,35 @@ export class UsuarioController {
             )
 
             res.status(200).json(user)
-        } catch (error) {
-            res.status(500).json({msg: "Error Internal"})
+        } catch(error){
+            res.status(500).json({msg: "Error internal"})
         }
     }
+
     public async createUsuario(req: Request, res: Response){
-        const{
-            id,
+        const {
             nombre,
             correo,
             telefono,
             direccion,
             activo
         } = req.body;
-
-        try {
-            let body: UsuarioI = {
+        try{
+            let body:UsuarioI = {
                 nombre,
                 correo,
                 telefono,
                 direccion,
                 activo
             }
+
             const user = await Usuario.create({...body});
             res.status(200).json({user})
-            
-        }catch (error) {
-            
+        } catch(error){
+
         }
     }
+
     public async updateUsuario(req: Request, res: Response){
         const { id:pk } = req.params;
 
@@ -69,9 +67,9 @@ export class UsuarioController {
             telefono,
             direccion,
             activo
-        }= req.body
+        } = req.body
 
-        try {
+        try{
             let body:UsuarioI = {
                 nombre,
                 correo,
@@ -79,43 +77,48 @@ export class UsuarioController {
                 direccion,
                 activo
             }
+
             const userExist: UsuarioI | null = await Usuario.findByPk(pk);
             // const userExist: UsuarioI | null = await Usuario.findOne(
             //     {
-            //         where: { id:pk }
+            //         where: { id: pk }
             //     }
+                
             // );
-            if(!userExist) return res.status(500).json({msg:"El Usuario No Existe"})
+
+            if(!userExist) return res.status(500).json({msg:"El usuario no esiste"})
             await Usuario.update(
-                body,{
+                body, {
                     where: {id:pk}
                 }
-            );
-            const user: UsuarioI | null = await Usuario.findByPk(pk);
-            if(user) return res.status(200).json({user})
-        } catch (error){
+            ); //select update from usuarios where id=pk
+
+        } catch(error){
 
         }
+
+        const user: UsuarioI | null = await Usuario.findByPk(pk);
+        if (user) return res.status(200).json({user})
+
     }
+
     public async deleteUsuario(req: Request, res: Response){
         const { id:pk } = req.params;
 
-        // try {
-        //     const userExist: UsuarioI | null = await Usuario.findByPk(pk);
-        //     if(!userExist) return res.status(500).json({msg:"El Usuario No Existe"})
-        //     await Usuario.destroy(
-        //         {
-        //             where: {id:pk}
-        //         }
-        //     )
-        //     res.status(200).json({msg:"Usuario Eliminado"})
-        // }catch (error){
-
-        // }
-        try {
+        /*try{
+            const userExist | null = await Usuario.findByPk(pk);
+            if(!userExist) return  res.status(500).json({msg: "El susuario no existe"})
+            await Usuario.destroy(
+                {
+                    where: {id: pk}
+                }
+            )
+            res.status(200).json({msg: "Usuario Eliminado"})
+        }catch(error){
+        }*/
+        try{
             const userExist: UsuarioI | null = await Usuario.findByPk(pk);
-            if(!userExist) return res.status(500).json({msg:"El Usuario No Existe"})
-        
+            if(!userExist) return  res.status(500).json({msg: "El susuario no existe"})
             await Usuario.update(
                 {
                     activo: false,
@@ -123,10 +126,16 @@ export class UsuarioController {
                 {
                     where: {id:pk}
                 }
-            );
-            return res.status(200).json({msg:"Usuario Eliminado"})
-        } catch (error){
+            ); //select update from usuarios where id=pk
 
+            return res.status(200).json({msg: "Usuario Eliminado"});
+
+
+        }catch(error){
+            
         }
+        
     }
+    
+     
 }

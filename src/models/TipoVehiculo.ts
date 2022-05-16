@@ -1,6 +1,5 @@
-import sequelize from "sequelize";
-import { Model, DataTypes } from "sequelize";
-import { database } from "../database/db";
+import { Model, DataType, DataTypes } from 'sequelize';
+import { database } from '../database/db';
 
 export class TipoVehiculo extends Model {
     public nombre!: string;
@@ -8,8 +7,8 @@ export class TipoVehiculo extends Model {
 
 export interface TipoVehiculoI {
     nombre: string;
+    
 }
-
 
 TipoVehiculo.init(
     {
@@ -17,11 +16,12 @@ TipoVehiculo.init(
             type: DataTypes.STRING,
             allowNull: false
         },
+
+        
     },
     {
-        tableName: "tipovehiculos",
+        tableName: 'tipovehiculos',
         sequelize: database,
-        timestamps: false
+        timestamps: true
     }
-    
 )

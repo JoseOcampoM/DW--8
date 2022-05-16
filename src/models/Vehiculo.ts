@@ -1,10 +1,10 @@
 import sequelize from "sequelize";
-import { Model, DataTypes } from "sequelize";
-import { database } from "../database/db";
-import { Marca } from "./Marca";
+import { Model, DataType, DataTypes } from 'sequelize';
+import { database } from '../database/db';
+import { Marca } from './Marca';
 import { TipoVehiculo } from "./TipoVehiculo";
+import { VehiculoVenta } from "./VehiculoVenta";
 import { Venta } from "./Venta";
-import { VehiculoVenta, VehiculoVentaI } from "./VehiculoVenta";
 
 export class Vehiculo extends Model {
     public modelo!: string;
@@ -30,26 +30,29 @@ Vehiculo.init(
             type: DataTypes.STRING,
             allowNull: false
         },
+
         color: {
             type: DataTypes.STRING,
             allowNull: false
         },
+
         placa: {
             type: DataTypes.STRING,
             allowNull: false
-        },  
+        },
+
         motor: {
             type: DataTypes.STRING,
             allowNull: false
-        },  
+        },
+
     },
     {
-        tableName: "vehiculo",
+        tableName: 'vehiculos',
         sequelize: database,
-        timestamps: false
+        timestamps: true
     }
-    
-)
+);
 
 Marca.hasMany(Vehiculo);
 Vehiculo.belongsTo(Marca);
@@ -57,5 +60,5 @@ Vehiculo.belongsTo(Marca);
 TipoVehiculo.hasMany(Vehiculo);
 Vehiculo.belongsTo(TipoVehiculo);
 
-Venta.belongsToMany(Vehiculo, {through: VehiculoVenta})
-Vehiculo.belongsToMany(Venta, {through: VehiculoVenta})
+Venta.belongsToMany(Vehiculo, {through: VehiculoVenta});
+Vehiculo.belongsToMany(Venta, {through: VehiculoVenta});
