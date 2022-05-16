@@ -1,11 +1,15 @@
-import { Request, Response, Application, Router } from "express";
+import { Request, Response, Application } from 'express';
 
-import { TipoVehiculoController } from "../controllers/tipovehiculo.controller";
+import { TipoVehiculoController } from '../controllers/tipovehiculo.controller';
 
-export class TipoVehiculoRoutes {
-    public tipovehiculoController: TipoVehiculoController = new TipoVehiculoController();
+export class TipoVehiculoRoutes{
+    public tipoVehiculoController: TipoVehiculoController = new TipoVehiculoController();
 
-    public routes(app: Application): void {
-        app.route("/tipovehiculo").get(this.tipovehiculoController.getAllTipovehiculo)
+    public routes(app: Application): void{
+        app.route("/tipovehiculos").get(this.tipoVehiculoController.getAllTipoVehiculo)
+        app.route("/tipovehiculo/:id").get(this.tipoVehiculoController.getOneTipoVehiculo)
+        app.route("/tipovehiculos").post(this.tipoVehiculoController.createTipoVehiculo)
+        // app.route("/ventas").patch(this.ventaController.updateVenta)
+        //app.route("/ventas").delete(this.ventaController.deleteVenta)
     }
 }

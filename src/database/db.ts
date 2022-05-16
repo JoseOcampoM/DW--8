@@ -6,7 +6,6 @@ const DB_USER = 'root';
 
 const DB_PASS = '12345678';
 
-
 export const database = new Sequelize(
     DB_NAME,
     DB_USER,
@@ -20,8 +19,7 @@ export const database = new Sequelize(
 );
 
 
-
 database.sync({force: false})
-    .then(function (){
-        console.log('Bases de datos creadas correctamente... !!! ');
+    .then(function () {
+        console.log('Base de datos creada correctamente...');
     });

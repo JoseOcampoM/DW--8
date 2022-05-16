@@ -1,16 +1,17 @@
-import { Request, Response, Application, Router } from "express";
+import { Request, Response, Application } from 'express';
 
-import { UsuarioController } from "../controllers/usuario.controller";
+import { UsuarioController } from '../controllers/usuario.controller';
 
 export class UsuarioRoutes {
     public usuarioController: UsuarioController = new UsuarioController();
-
-    public routes(app: Application): void {
+    
+    public routes(app: Application): void{
         app.route("/usuarios").get(this.usuarioController.getAllUsuario)
         app.route("/usuario/:id").get(this.usuarioController.getOneUsuario)
         app.route("/usuario").post(this.usuarioController.createUsuario)
-        app.route("/usuario/:id").patch(this.usuarioController.updateUsuario)
-        // app.route("/usuario/:id").delete(this.usuarioController.deleteUsuario)
-        app.route("/Delusuario/:id").patch(this.usuarioController.deleteUsuario)
+        app.route("/actusuario/:id").patch(this.usuarioController.updateUsuario)
+        //app.route("/usuario:id").delete(this.usuarioController.deleteUsuario)
+        app.route("/delusuario/:id").patch(this.usuarioController.deleteUsuario)
+
     }
 }
